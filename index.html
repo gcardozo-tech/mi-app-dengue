@@ -58,8 +58,8 @@
       margin-top: 20px;
     }
   </style>
-
 </head>
+
 <body>
 
 <h1>🦟 Sistema de Alerta Dengue</h1>
@@ -77,8 +77,30 @@
 
 <div id="map"></div>
 
+<!-- GOOGLE MAPS -->
 <script async
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8ZMn9XfdyUgTTyiW2iOYJ30I2rYcRdUg&callback=iniciarMapa">
+</script>
+
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAwX8cq9WssHRkIVURjFd6RmxxydBZ9nP8",
+    authDomain: "app-dengue-3fbb2.firebaseapp.com",
+    projectId: "app-dengue-3fbb2",
+    storageBucket: "app-dengue-3fbb2.firebasestorage.app",
+    messagingSenderId: "164231736730",
+    appId: "1:164231736730:web:764feb75d9ad9647495e23",
+    measurementId: "G-5WTC736H0V"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.db = db;
 </script>
 
 <script src="app.js"></script>
