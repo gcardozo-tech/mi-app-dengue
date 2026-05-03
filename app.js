@@ -1,15 +1,31 @@
 let reportes = 0;
 let map;
 
-// 🗺️ INICIAR MAPA
 function iniciarMapa() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -6, lng: -76 },
     zoom: 13
   });
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (pos) {
+
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+
+      map.setCenter({ lat: lat, lng: lng });
+      map.setZoom(15);
+
+      new google.maps.Marker({
+        position: { lat: lat, lng: lng },
+        map: map,
+        title: "Tu ubicación"
+      });
+
+    });
+  }
 }
 
-// 🧠 FUNCIÓN PRINCIPAL
 function guardar() {
   const texto = document.getElementById("texto").value;
 
@@ -18,7 +34,6 @@ function guardar() {
     return;
   }
 
-  // 📍 GPS
   navigator.geolocation.getCurrentPosition(function (pos) {
 
     const lat = pos.coords.latitude;
@@ -40,7 +55,6 @@ function guardar() {
       color = "red";
     }
 
-    // 🧾 RESULTADO
     const resultado = document.getElementById("resultado");
 
     resultado.innerText =
@@ -50,7 +64,6 @@ function guardar() {
 
     resultado.style.color = color;
 
-    // 📋 LISTA
     const lista = document.getElementById("lista");
 
     const item = document.createElement("li");
@@ -59,13 +72,14 @@ function guardar() {
 
     lista.appendChild(item);
 
-    // 📍 MARCADOR EN MAPA
     new google.maps.Marker({
       position: { lat: lat, lng: lng },
       map: map
     });
 
-    // limpiar
+    map.setCenter({ lat: lat, lng: lng });
+    map.setZoom(15);
+
     document.getElementById("texto").value = "";
 
   });
