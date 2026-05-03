@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alerta Dengue</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      color: red;
+    }
+
+    input {
+      padding: 10px;
+      width: 250px;
+      border-radius: 5px;
+      border: 1px solid gray;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: darkred;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      white-space: pre-line;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: white;
+      margin: 5px;
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    #map {
+      height: 400px;
+      margin-top: 20px;
+    }
+  </style>
+
+</head>
+<body>
+
+<h1>🦟 Sistema de Alerta Dengue</h1>
+
+<p>Escribe si hay dengue en tu zona:</p>
+
+<input type="text" id="texto" placeholder="Ej: hay dengue en mi barrio">
+<br><br>
+<button onclick="guardar()">Reportar</button>
+
+<h3 id="resultado"></h3>
+
+<h3>📋 Reportes:</h3>
+<ul id="lista"></ul>
+
+<!-- MAPA -->
+<div id="map"></div>
+
+<!-- GOOGLE MAPS -->
+<script async
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8ZMn9XfdyUgTTyiW2iOYJ30I2rYcRdUg&callback=iniciarMapa">
+</script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
