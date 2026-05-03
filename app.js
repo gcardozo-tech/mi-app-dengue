@@ -1,6 +1,9 @@
 let reportes = 0;
 let map;
 
+const db = window.db;
+
+// 🗺️ INICIAR MAPA
 function iniciarMapa() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -6, lng: -76 },
@@ -26,6 +29,7 @@ function iniciarMapa() {
   }
 }
 
+// 🧠 GUARDAR REPORTE
 function guardar() {
   const texto = document.getElementById("texto").value;
 
@@ -72,6 +76,7 @@ function guardar() {
 
     lista.appendChild(item);
 
+    // 📍 marcador en mapa
     new google.maps.Marker({
       position: { lat: lat, lng: lng },
       map: map
@@ -80,7 +85,42 @@ function guardar() {
     map.setCenter({ lat: lat, lng: lng });
     map.setZoom(15);
 
+    // ☁️ GUARDAR EN FIREBASE
+    import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js")
+    .then(({ collection, addDoc }) => {
+
+      addDoc(collection(db, "reportes"), {
+        texto: texto,
+        lat: lat,
+        lng: lng,
+        fecha: new Date()
+      });
+
+    });
+
     document.getElementById("texto").value = "";
 
   });
 }
+
+// 🔄 MOSTRAR DATOS DESDE FIREBASE
+import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js")
+.then(({ collection, onSnapshot }) => {
+
+  const lista = document.getElementById("lista");
+
+  onSnapshot(collection(db, "reportes"), (snapshot) => {
+    lista.innerHTML = "";
+
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+
+      const item = document.createElement("li");
+      item.innerText =
+        data.texto + " (" + data.lat.toFixed(2) + ", " + data.lng.toFixed(2) + ")";
+
+      lista.appendChild(item);
+    });
+  });
+
+});
